@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            background-color: green;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 1s ease-in-out;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        button {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 15px;
+        }
+
+        #countdown {
+            font-size: 30px;
+            margin: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Please let me study</h1>
+    <div id="countdown"></div>
+    <button onclick="startCountdown()">Start Countdown</button>
+    <button onclick="stopTimer()">Stop Timer</button>
+
+    <script>
+        var countdownInterval;
+
+        function startCountdown() {
+            resetPage();
+            document.body.style.backgroundColor = 'red';
+
+            var totalSeconds = 900; // Set your total countdown time in seconds (5 minutes)
+            var countdownDisplay = document.getElementById('countdown');
+
+            updateDisplay(totalSeconds);
+
+            countdownInterval = setInterval(function() {
+                totalSeconds--;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    document.body.style.backgroundColor = 'green';
+                    countdownDisplay.textContent = 'Done';
+                } else {
+                    updateDisplay(totalSeconds);
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(countdownInterval);
+            resetPage();
+        }
+
+        function resetPage() {
+            document.body.style.backgroundColor = 'green';
+            document.getElementById('countdown').textContent = '';
+        }
+
+        function updateDisplay(totalSeconds) {
+            var minutes = Math.floor(totalSeconds / 60);
+            var seconds = totalSeconds % 60;
+
+            var displayText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            document.getElementById('countdown').textContent = displayText;
+        }
+    </script>
+</body>
+</html>
